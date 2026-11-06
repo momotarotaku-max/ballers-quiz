@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BALLER'S QUIZ">
 <meta name="theme-color" content="#1b2f6b">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
 <title>BALLER'S BASKETBALL QUIZ</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -75,7 +77,10 @@
       .then(function(key){ return crypto.subtle.decrypt({name:"AES-GCM", iv:fromB64(PAYLOAD.iv)}, key, fromB64(PAYLOAD.data)); })
       .then(function(buf){ return new TextDecoder().decode(buf); });
   }
+  // クイズを開いた後もホーム画面アイコン(BQ)が使われるよう、アイコンの指定を入れてから表示する
+  var ICON_TAGS = '<link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="apple-touch-icon.png">';
   function open(html){
+    if(html.indexOf('rel="apple-touch-icon"') < 0) html = html.replace(/<head>/i, '<head>' + ICON_TAGS);
     document.open(); document.write(html); document.close();
   }
 
